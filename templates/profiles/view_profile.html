@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mi Perfil</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ user.username }}</h5>
+            <p class="card-text"><strong>Correo electrónico:</strong> {{ user.email }}</p>
+            <p class="card-text"><strong>Nombre completo:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p class="card-text"><strong>Bio:</strong> {{ user.profile.bio|default:"No especificado" }}</p>
+            <p class="card-text"><strong>Ubicación:</strong> {{ user.profile.location|default:"No especificado" }}</p>
+            <p class="card-text"><strong>Sitio web:</strong> 
+                {% if user.profile.website %}
+                    <a href="{{ user.profile.website }}" target="_blank">{{ user.profile.website }}</a>
+                {% else %}
+                    No especificado
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
