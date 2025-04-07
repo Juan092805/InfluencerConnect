@@ -1,23 +1,93 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-4">
     <h1 class="mb-4">Mi Perfil</h1>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ user.username }}</h5>
-            <p class="card-text"><strong>Correo electrónico:</strong> {{ user.email }}</p>
-            <p class="card-text"><strong>Nombre completo:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-            <p class="card-text"><strong>Bio:</strong> {{ user.profile.bio|default:"No especificado" }}</p>
-            <p class="card-text"><strong>Ubicación:</strong> {{ user.profile.location|default:"No especificado" }}</p>
-            <p class="card-text"><strong>Sitio web:</strong> 
-                {% if user.profile.website %}
-                    <a href="{{ user.profile.website }}" target="_blank">{{ user.profile.website }}</a>
+
+    <!-- Mostrar perfil de la empresa -->
+    {% if user.profile.company %}
+        <div class="card mt-5">
+            <div class="card-body text-center">
+                <!-- Foto de perfil -->
+                {% if user.profile.company.logo %}
+                    <img src="{{ user.profile.company.logo.url }}" class="img-fluid rounded-circle mb-3" alt="Logotipo de la empresa" style="width: 150px; height: 150px;">
                 {% else %}
-                    No especificado
+                    <img src="/media/images/perritos.png" class="img-fluid rounded-circle mb-3" alt="Logotipo predeterminado" style="width: 150px; height: 150px;">
                 {% endif %}
-            </p>
+                
+                <!-- Nombre de usuario -->
+                <h3>{{ user.username }}</h3>
+                
+                <!-- Industria -->
+                <p><strong>Industria:</strong> {{ user.profile.company.industry }}</p>
+                
+                <!-- Tamaño -->
+                <p><strong>Tamaño:</strong> {{ user.profile.company.company_size }}</p>
+                
+                <!-- Bio -->
+                <p><strong>Bio:</strong> {{ user.profile.bio|default:"No especificada" }}</p>
+                
+                <!-- Email -->
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                
+                <!-- Sitio web -->
+                <p><strong>Sitio web:</strong> 
+                    {% if user.profile.website %}
+                        <a href="{{ user.profile.website }}" target="_blank">{{ user.profile.website }}</a>
+                    {% else %}
+                        No especificado
+                    {% endif %}
+                </p>
+                
+                <!-- Ubicación -->
+                <p><strong>Ubicación:</strong> {{ user.profile.location|default:"No especificada" }}</p>
+            </div>
         </div>
-    </div>
+    {% endif %}
+
+    <!-- Mostrar perfil del influencer -->
+    {% if user.profile.influencer %}
+        <div class="card mt-5">
+            <div class="card-body text-center">
+                <!-- Foto de perfil -->
+                {% if user.profile.influencer.profile_photo %}
+                    <img src="{{ user.profile.influencer.profile_photo.url }}" class="img-fluid rounded-circle mb-3" alt="Foto de perfil" style="width: 150px; height: 150px;">
+                {% else %}
+                    <img src="/media/images/meme.jpeg" class="img-fluid rounded-circle mb-3" alt="Foto predeterminada" style="width: 150px; height: 150px;">
+                {% endif %}
+                
+                <!-- Nombre de usuario -->
+                <h3>{{ user.username }}</h3>
+                
+                <!-- Categoría -->
+                <p><strong>Categoría:</strong> {{ user.profile.influencer.category }}</p>
+                
+                <!-- Plataformas -->
+                <p><strong>Plataformas:</strong> {{ user.profile.influencer.platforms }}</p>
+                
+                <!-- Tamaño de audiencia -->
+                <p><strong>Tamaño de audiencia:</strong> {{ user.profile.influencer.audience_size }}</p>
+                
+                <!-- Email -->
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                
+                <!-- Biografía -->
+                <p><strong>Bio:</strong> {{ user.profile.bio|default:"No especificada" }}</p>
+                
+                <!-- Sitio web -->
+                <p><strong>Sitio web:</strong> 
+                    {% if user.profile.website %}
+                        <a href="{{ user.profile.website }}" target="_blank">{{ user.profile.website }}</a>
+                    {% else %}
+                        No especificado
+                    {% endif %}
+                </p>
+                
+                <!-- Ubicación -->
+                <p><strong>Ubicación:</strong> {{ user.profile.location|default:"No especificada" }}</p>
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

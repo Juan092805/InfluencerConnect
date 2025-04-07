@@ -81,7 +81,11 @@ def edit_profile(request):
 
 @login_required
 def view_profile(request):
-    return render(request, 'profiles/view_profile.html', {'user': request.user})
+    return render(request, 'profiles/view_profile.html', {
+        'user': request.user,
+        'company': getattr(request.user.profile, 'company', None),
+        'influencer': getattr(request.user.profile, 'influencer', None),
+    })
 
 class ProfileDetailView(DetailView):
     model = Profile

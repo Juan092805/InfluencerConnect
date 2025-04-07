@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'users',
     'profiles',
     'messages_app',
+    'campaigns',
     
     # Aplicaciones de terceros
     'crispy_forms',
@@ -87,7 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'es-es'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 USE_I18N = True
 USE_TZ = True
 
@@ -111,4 +112,12 @@ LOGIN_URL = 'login'
 # Configuración de Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Configuración de correo electrónico
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Cambia esto según tu proveedor de correo
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tu_correo@gmail.com'  # Tu correo electrónico
+EMAIL_HOST_PASSWORD = 'tu_contraseña'  # Tu contraseña o token de aplicación
 

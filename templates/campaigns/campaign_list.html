@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Campañas{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Campañas</h1>
+
+    <!-- Mostrar botón para crear campañas si el usuario es una empresa -->
+    {% if user.is_authenticated and user.user_type == 'empresa' %}
+        <div class="mb-4">
+            <a href="{% url 'campaigns:campaign_create' %}" class="btn btn-success">Crear Campaña</a>
+        </div>
+    {% endif %}
+
+    <!-- Formulario de búsqueda -->
+    <form method="get" action="{% url 'campaigns:campaign_list' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Buscar campañas..." value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+
+    <div class="row">
+        {% if campaigns %}
+            {% for campaign in campaigns %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <!-- Mostrar imagen de la campaña -->
+                        {% if campaign.image %}
+                            <img src="{{ campaign.image.url }}" class="card-img-top" alt="Imagen de la campaña">
+                        {% else %}
+                            <img src="{% static 'images/default_campaign_image.jpg' %}" class="card-img-top" alt="Imagen predeterminada">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ campaign.title }}</h5>
+                            <p class="card-text">{{ campaign.description|truncatewords:20 }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">No se encontraron campañas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

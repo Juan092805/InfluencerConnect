@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
-    profile_picture = models.ImageField(upload_to='profile_pics', default='default.jpg')
+    profile_picture = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')  # Ajuste en la ruta predeterminada
     bio = models.TextField(max_length=500, blank=True)
     website = models.URLField(max_length=200, blank=True)
     location = models.CharField(max_length=100, blank=True)
@@ -39,6 +39,8 @@ class CompanyProfile(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='company')
     industry = models.CharField(max_length=20, choices=INDUSTRY_CHOICES)
     company_size = models.CharField(max_length=10, choices=SIZE_CHOICES)
+    logo = models.ImageField(upload_to='company_logos/', blank=True, null=True)
+    description = models.TextField(blank=True)  # Descripción adicional de la empresa
     
     def __str__(self):
         return f'{self.profile.user.username} Company Profile'
@@ -67,8 +69,10 @@ class InfluencerProfile(models.Model):
     
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='influencer')
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
-    platforms = models.CharField(max_length=200, help_text="Plataformas separadas por comas (ej: Instagram, TikTok)")
+    platforms = models.CharField(max_length=200)
     audience_size = models.CharField(max_length=10, choices=AUDIENCE_SIZE_CHOICES)
+    profile_photo = models.ImageField(upload_to='influencer_profiles/', blank=True, null=True)
+    bio = models.TextField(blank=True) 
     
     def __str__(self):
         return f'{self.profile.user.username} Influencer Profile'
